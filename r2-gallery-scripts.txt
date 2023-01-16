@@ -1,0 +1,2 @@
+本文件用於確定圖庫的根目錄.
+This file is used to determine the root directory of the R2-Library.

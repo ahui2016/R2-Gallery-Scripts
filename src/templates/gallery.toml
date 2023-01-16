@@ -1,0 +1,51 @@
+# 本文件采用 TOML 格式 https://toml.io/
+
+# 以下项目的含义及其填写方法详见 https://github.com/ahui2016/R2-Gallery-Scripts
+
+
+# 可修改
+author = '{{gallery.author}}'
+
+# 可修改
+notes = '''
+{{gallery.notes}}
+'''
+
+# 可修改
+story = '''
+{{gallery.story}}
+'''
+
+# 可修改. 请选择: 'Story' / 'Single' / 'List'
+frontpage = '{{gallery.frontpage}}'
+
+# 可修改
+albums = [
+{% for album in gallery.albums %}
+    '{{album}}',
+{%- endfor %}
+]
+
+# 注意, 请勿修改 checksum, image_output_format
+checksum = '{{gallery.checksum}}'
+image_output_format = '{{gallery.image_output_format}}'
+
+# 可修改, 单位: MB
+image_size_max = {{gallery.image_size_max}}
+
+# 以下全部项目均可修改，方括号部分必须填写。
+# 填写方法详见 https://github.com/ahui2016/R2-Gallery-Scripts
+
+use_proxy = false
+http_proxy = "http://127.0.0.1:1081"
+
+image_width_max = {{gallery.image_width_max}}
+image_height_max = {{gallery.image_height_max}}
+thumb_size = {{gallery.thumb_size}}
+
+endpoint_url = '{{gallery.endpoint_url}}'
+aws_access_key_id = '{{gallery.aws_access_key_id}}'
+aws_secret_access_key = '{{gallery.aws_secret_access_key}}'
+bucket_name = '{{gallery.bucket_name}}'
+bucket_url = '{{gallery.bucket_url}}'
+
