@@ -7,6 +7,7 @@ Config       = 'config'
 Gallery_Toml = 'gallery.toml'
 Src          = 'src'
 Templates    = 'templates'
+Albums       = 'albums'
 
 R2_Gallery_Scripts_TXT = 'r2-gallery-scripts.txt'
 
@@ -17,6 +18,7 @@ CWD = Path.cwd().resolve()
 
 Gallery_Toml_Path = CWD.joinpath(Config, Gallery_Toml)
 Templates_Path    = CWD.joinpath(Src, Templates)
+Albums_Path       = CWD.joinpath(Albums)
 
 R2_Gallery_Scripts_TXT_Path = CWD.joinpath(R2_Gallery_Scripts_TXT)
 

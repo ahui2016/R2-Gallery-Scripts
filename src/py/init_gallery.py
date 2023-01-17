@@ -5,6 +5,7 @@ from r2g.util import check_root_dir, render_gallery_toml
 
 from r2g.gallery import new_gallery
 
+
 if __name__ == "__main__":
     check_root_dir()
 

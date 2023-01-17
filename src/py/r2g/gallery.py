@@ -13,7 +13,7 @@ def new_gallery(title:str) -> dict:
         # 圖庫的故事 (Markdown格式)
         story='',
         
-        # 可選擇 Frontpage 裏的三種展示方式
+        # 圖庫首頁的展示方式
         frontpage=Frontpage.Story.name,
         
         # 相冊列表
@@ -46,3 +46,7 @@ def new_gallery(title:str) -> dict:
         bucket_name = '<bucket_name>',
         bucket_url = '<bucket_url>'
     )
+
+
+def add_album(gallery:dict, album_name:str):
+    gallery['albums'].insert(0, album_name)
