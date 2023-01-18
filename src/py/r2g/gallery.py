@@ -1,5 +1,7 @@
+from pathlib import Path
 from .common import Frontpage, ImageFormat, split_notes, tomli_loads
-from .const import Gallery_Toml_Path, Index_HTML
+from .const import Gallery_Toml_Path, Index_HTML, Albums_Path
+import album as Album
 
 
 def new_gallery(title:str) -> dict:
@@ -75,3 +77,34 @@ def get_title(gallery:dict):
 def get_r2_html_url(gallery:dict) -> str:
     """R2 首頁的完整網址"""
     return f"{gallery['bucket_url']}{Index_HTML}"
+
+
+def albums_pics(gallery:dict):
+    """獲取 gallery['albums'] 裏全部相冊的全部圖片的路徑.
+
+    :return: (dict, err:str|falsy)
+    """
+    albums, err = albums_path(gallery)
+    if err:
+        return {}, err
+
+    d = {}
+    for album in albums:
+        d[str(album)] = Album.pics_path(album)
+    
+    return d, None
+
+
+def albums_path(gallery:dict):
+    """獲取 gallery['albums'] 裏全部相冊的路徑.
+    
+    :return: (list[Path], err:str|falsy)
+    """
+    albums : list[Path] = []
+    for name in gallery['albums']:
+        album = Albums_Path.joinpath(name)
+        if not album.exists():
+            return [], f'相冊不存在: {album}'
+        albums.append(album)
+    
+    return albums, None

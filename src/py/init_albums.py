@@ -4,6 +4,7 @@ import r2g.gallery as Gallery
 from r2g.gallery import load_gallery
 from r2g.album import new_album
 from r2g.const import Albums_Path, Metadata, Thumbs, Album_Toml
+from r2g.common import check_filename
 from r2g.util import (
     check_initialized, render_gallery_toml, render_album_toml,
     print_err_exist
@@ -60,6 +61,11 @@ if __name__ == "__main__":
         print_err_exist(
             'Warning: 未發現新相冊 (注意, 新相冊必須是空文件夾)。\n'
             '請在 "albums" 文件夾內創建新文件夾後再運行 init_albums.py')
+
+    for album in new_albums:
+        if err := check_filename(album.name):
+            print(f'Error: 文件夾名錯誤: {album.name}')
+            print_err_exist(err)
 
     gallery = load_gallery()
     for album_path in new_albums:

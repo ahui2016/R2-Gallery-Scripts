@@ -1,3 +1,6 @@
+from pathlib import Path
+
+from .const import Album_Toml
 from .common import Frontpage, SortBy
 
 
@@ -28,3 +31,12 @@ def new_album(foldername:str) -> dict:
         # sha1, 用於判斷相冊首頁 HTML 是否需要更新
         checksum='',
     )
+
+
+def pics_path(album_path:Path) -> list[Path]:
+    """獲取指定相冊內全部圖片的路徑"""
+    pics = []
+    for file in album_path.iterdir():
+        if file.is_file() and file.name != Album_Toml:
+            pics.append(file)
+    return pics
