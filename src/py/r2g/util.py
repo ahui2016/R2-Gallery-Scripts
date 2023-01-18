@@ -11,19 +11,25 @@ jinja_env = jinja2.Environment(
 )
 
 
+def print_err_exist(err:str):
+    """若有錯誤則打印錯誤並結束程式, 無錯誤則忽略."""
+    if err:
+        print(err, file=sys.stderr)
+        sys.exit(1)
+
+
 def check_root_dir():
     """檢查當前文件夾是否圖庫根目錄"""
     if not R2_Gallery_Scripts_TXT_Path.exists():
-        print(f'Error: 不是圖庫根目錄: {CWD}')
-        sys.exit(1)
+        print_err_exist(f'Error: 不是圖庫根目錄: {CWD}')
 
 
 def check_initialized():
     """檢查圖庫是否已經初始化"""
     check_root_dir()
     if not Gallery_Toml_Path.exists():
-        print('圖庫未初始化, 請執行指令 "python src/py/init_gallery.py"')
-        sys.exit(1)
+        print_err_exist(
+            '圖庫未初始化, 請執行指令 "python src/py/init_gallery.py"')
 
 
 def render_write(name:str, output:Path, data:dict):

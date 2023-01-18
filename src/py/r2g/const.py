@@ -12,6 +12,8 @@ Album_Toml   = 'album.toml'
 Metadata     = 'metadata'
 Thumbs       = 'thumbs'
 
+Index_HTML = 'index.html'
+
 R2_Gallery_Scripts_TXT = 'r2-gallery-scripts.txt'
 
 

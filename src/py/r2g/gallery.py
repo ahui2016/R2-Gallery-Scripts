@@ -1,5 +1,5 @@
-from .common import Frontpage, ImageFormat, tomli_loads
-from .const import Gallery_Toml_Path
+from .common import Frontpage, ImageFormat, split_notes, tomli_loads
+from .const import Gallery_Toml_Path, Index_HTML
 
 
 def new_gallery(title:str) -> dict:
@@ -62,3 +62,16 @@ def load_gallery() -> dict:
 
 def add_album(gallery:dict, album_name:str):
     gallery['albums'].insert(0, album_name)
+
+
+def get_title(gallery:dict):
+    """
+    :return: (title, err)
+    """
+    title, _, err = split_notes(gallery['notes'])
+    return title, err
+
+
+def get_r2_html_url(gallery:dict) -> str:
+    """R2 首頁的完整網址"""
+    return f"{gallery['bucket_url']}{Index_HTML}"

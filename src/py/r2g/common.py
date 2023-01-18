@@ -9,6 +9,12 @@ Filename_Forbid_Pattern = re.compile(r"[^._0-9a-zA-Z\-]")
 0-9, a-z, A-Z, _(下劃線), -(短橫線), .(點)。
 """
 
+Short_Notes_Limit = 512
+"""簡單描述(notes)的長度上限, 單位: UTF8字符"""
+
+Title_Limit = 32
+"""標題的長度上限, 單位: UTF8字符"""
+
 
 class Frontpage(Enum):
     """圖庫/相冊首頁的展示方式"""
@@ -64,3 +70,30 @@ def tomli_loads(file) -> dict:
         except UnicodeDecodeError:
             text = text.decode("utf-16").encode("utf-8").decode("utf-8")
         return tomli.loads(text)
+
+
+def split_notes(text:str):
+    """
+    :return: (標題, 簡介, 錯誤)
+    """
+    title, notes = split_first_line(text)
+    err = None
+    if not title:
+        err = "未填寫notes"
+    return title, notes, err
+
+
+def split_first_line(text:str):
+    """將 text 分成兩部分, 第一行是第一部分, 其餘是第二部分.
+    其中第一行長度限制.
+
+    注意, 有可能返回空字符串.
+    """
+    text = text.strip()
+    parts = text.split("\n", maxsplit=1)
+    if len(parts) < 2:
+        parts.append("")
+    head, tail = parts[0].strip(), parts[1].strip()
+    if len(head) > Title_Limit:
+        head = head[:Title_Limit]
+    return head, tail
