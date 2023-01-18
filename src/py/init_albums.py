@@ -1,8 +1,11 @@
 import sys
 from pathlib import Path
 
-from r2g.const import CWD, Albums_Path
-from r2g.util import check_root_dir
+import r2g.gallery as Gallery
+from r2g.gallery import load_gallery
+from r2g.album import new_album
+from r2g.const import Albums_Path, Metadata, Thumbs, Album_Toml
+from r2g.util import check_initialized, render_gallery_toml, render_album_toml
 
 
 def get_all_albums() -> list[Path]:
@@ -30,11 +33,34 @@ def count_children_of_folder(folder:Path) -> int:
     return n
 
 
+def init_album(album_path:Path, gallery:dict):
+    metadata_path = album_path.joinpath(Metadata)
+    thumbs_path = album_path.joinpath(Thumbs)
+    thumbs_path.mkdir()
+    metadata_path.mkdir()
+    
+    album_name = album_path.name
+    album = new_album(album_name)
+    album_toml_path = album_path.joinpath(Album_Toml)
+    render_album_toml(album, album_toml_path)
+
+    Gallery.add_album(gallery, album_name)
+    print(f"相冊創建成功: {album_name}。")
+    print(f"請用文本編輯器打開 {album_toml_path} 填寫相冊信息。")
+
+
 if __name__ == "__main__":
-    check_root_dir()
+    check_initialized()
     
     folders = get_all_albums()
     new_albums = get_new_albums(folders)
     if len(new_albums) == 0:
-        print('Warning: 未發現新相冊 (注意, 新相冊必須是空文件夾)。/n' \
+        print('Warning: 未發現新相冊 (注意, 新相冊必須是空文件夾)。\n'
               '請在 "albums" 文件夾內創建新文件夾後再運行 init_albums.py')
+        sys.exit(1)
+
+    gallery = load_gallery()
+    for album_path in new_albums:
+        init_album(album_path, gallery)
+    
+    render_gallery_toml(gallery)

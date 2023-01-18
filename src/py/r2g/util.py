@@ -18,6 +18,14 @@ def check_root_dir():
         sys.exit(1)
 
 
+def check_initialized():
+    """檢查圖庫是否已經初始化"""
+    check_root_dir()
+    if not Gallery_Toml_Path.exists():
+        print('圖庫未初始化, 請執行指令 "python src/py/init_gallery.py"')
+        sys.exit(1)
+
+
 def render_write(name:str, output:Path, data:dict):
     tmpl = jinja_env.get_template(name)
     rendered = tmpl.render(data)
@@ -27,3 +35,7 @@ def render_write(name:str, output:Path, data:dict):
 
 def render_gallery_toml(gallery:dict):
     render_write(Gallery_Toml, Gallery_Toml_Path, {'gallery':gallery})
+
+
+def render_album_toml(album:dict, toml_path:Path):
+    render_write(Album_Toml, toml_path, {'album':album})

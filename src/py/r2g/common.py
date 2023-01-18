@@ -1,4 +1,7 @@
+import re
 from enum import Enum, auto
+
+import tomli
 
 
 Filename_Forbid_Pattern = re.compile(r"[^._0-9a-zA-Z\-]")
@@ -50,3 +53,14 @@ def check_filename(name:str):
     return "文件名/文件夾名只能使用 " \
            "0-9, a-z, A-Z, _(下劃線), -(短橫線), .(點)\n" \
            "注意: 不能使用空格, 請用下劃線或短橫線代替空格。"
+
+
+def tomli_loads(file) -> dict:
+    """正確處理 utf-16"""
+    with open(file, "rb") as f:
+        text = f.read()
+        try:
+            text = text.decode()  # Default encoding is 'utf-8'.
+        except UnicodeDecodeError:
+            text = text.decode("utf-16").encode("utf-8").decode("utf-8")
+        return tomli.loads(text)

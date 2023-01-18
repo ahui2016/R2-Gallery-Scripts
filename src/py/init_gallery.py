@@ -16,5 +16,5 @@ if __name__ == "__main__":
     gallery = new_gallery(CWD.name)
     render_gallery_toml(gallery)
     print('圖庫創建成功。')
-    print(f'請用文本編輯器打開 {Gallery_Toml_Path} 填寫圖庫相關信息。')
+    print(f'請用文本編輯器打開 {Gallery_Toml_Path} 填寫圖庫信息。')
 

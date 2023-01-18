@@ -8,6 +8,9 @@ Gallery_Toml = 'gallery.toml'
 Src          = 'src'
 Templates    = 'templates'
 Albums       = 'albums'
+Album_Toml   = 'album.toml'
+Metadata     = 'metadata'
+Thumbs       = 'thumbs'
 
 R2_Gallery_Scripts_TXT = 'r2-gallery-scripts.txt'
 

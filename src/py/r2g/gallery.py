@@ -1,4 +1,5 @@
-from .common import Frontpage, ImageFormat
+from .common import Frontpage, ImageFormat, tomli_loads
+from .const import Gallery_Toml_Path
 
 
 def new_gallery(title:str) -> dict:
@@ -46,6 +47,17 @@ def new_gallery(title:str) -> dict:
         bucket_name = '<bucket_name>',
         bucket_url = '<bucket_url>'
     )
+
+
+def load_gallery() -> dict:
+    """從硬碟中讀取 gallery.toml 的信息"""
+    gallery = tomli_loads(Gallery_Toml_Path)
+    gallery['notes'] = gallery['notes'].strip()
+    gallery['story'] = gallery['story'].strip()
+    gallery['frontpage'] = gallery['frontpage'].capitalize()
+    bucket_url = gallery['bucket_url']
+    gallery['bucket_url'] = bucket_url.rstrip("/") + "/"
+    return gallery
 
 
 def add_album(gallery:dict, album_name:str):
